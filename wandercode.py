@@ -139,7 +139,13 @@ def display_posts():
 st.logo("assets/logo2.png", size="large", link=None, icon_image="assets/logo2.png")
 # st.title("WanderCode")
 
-user_id = st.experimental_user.email
+# user_id = st.experimental_user.mail
+# print("user_id: ",type(user_id), user_id)
+uid = st.experimental_user.to_dict()
+st.session_state.user_id = uid.get("email")
+print("uid: ",type(uid), uid)
+print("st.session_state.user_id: ",type(st.session_state.user_id), st.session_state.user_id)
+
 
 result = [(3, 1), (2, 123)] 
 my_dict = {key: value for key, value in result}
@@ -149,7 +155,7 @@ display_posts()
 
 # Posting new content
 # This is only allowed by me
-if user_id == "ringoharms@gmail.com" or user_id == "test@example.com":
+if st.session_state.user_id == "ringoharms@gmail.com" or st.session_state.user_id == "test@example.com":
 
     st.sidebar.title("Post New Content")
     story_content = st.sidebar.text_area("Story Content (optional)")
