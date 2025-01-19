@@ -105,7 +105,7 @@ def display_posts():
                         st.write(content)
                 if audio_path:
                     st.audio(audio_path)
-                actions_view(post_id, dt)
+                if st.session_state.user_id: actions_view(post_id, dt)
                 if lyrics_path:
                     with open(lyrics_path, 'r') as file:
                         lyrics_original = file.read()
@@ -117,10 +117,10 @@ def display_posts():
                         st.write(lyrics_all_fixed)            
             elif content_type == "image":
                 st.image(image_path, caption='Image Post')
-                actions_view(post_id, dt)
+                if st.session_state.user_id: actions_view(post_id, dt)
             elif content_type == "story":
                 st.write(content)
-                actions_view(post_id, dt)
+                if st.session_state.user_id: actions_view(post_id, dt)
             elif content_type == "mp3":
                 st.audio(audio_path)
                 if lyrics_path:
@@ -132,24 +132,18 @@ def display_posts():
                     st.expander("", expanded=False, icon=None)
                     with st.expander("lyrics"):
                         st.write(lyrics_all_fixed)    
-                actions_view(post_id, dt)
+                if st.session_state.user_id: actions_view(post_id, dt)
 
 
 # Main Streamlit App
 st.logo("assets/logo2.png", size="large", link=None, icon_image="assets/logo2.png")
 # st.title("WanderCode")
 
-# user_id = st.experimental_user.mail
-# print("user_id: ",type(user_id), user_id)
 uid = st.experimental_user.to_dict()
 st.session_state.user_id = uid.get("email")
-print("uid: ",type(uid), uid)
-print("st.session_state.user_id: ",type(st.session_state.user_id), st.session_state.user_id)
-
-
-result = [(3, 1), (2, 123)] 
-my_dict = {key: value for key, value in result}
-print(my_dict)  # Output: {3: 1}
+# print("st.session_state.user_id: ",type(st.session_state.user_id), st.session_state.user_id)
+# st.session_state.user_id = None
+# print("_st.session_state.user_id: ",type(st.session_state.user_id), st.session_state.user_id)
 
 display_posts()
 
